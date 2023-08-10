@@ -6,7 +6,12 @@ const userSchema = new Schema({
     lastName: String,
     email: String,
     password: String,
-    permissionLevel: Number
+    permissionLevel: Number,
+    friends:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        nullable: true
+      }]
 });
 
 userSchema.virtual('id').get(function () {
