@@ -27,8 +27,11 @@ exports.list = (req, res) => {
         })
 };
 
+// commentY  edited here 
+
 exports.getById = (req, res) => {
-    UserModel.findById(req.params.userId)
+    const friendQuery = req.query.friend === 'true' || 'defualt';
+    UserModel.findById(req.params.userId, friendQuery)
         .then((result) => {
             res.status(200).send(result);
         });
@@ -54,6 +57,9 @@ exports.removeById = (req, res) => {
         });
 };
 
+
+// commentY  added  here
+ 
 exports.addFriendById = (req, res)=>{
     UserModel.addFriendById(req.body.userId,req.params.userId)
         .then((result)=>{

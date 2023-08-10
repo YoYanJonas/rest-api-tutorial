@@ -33,6 +33,8 @@ exports.routesConfig = function (app) {
         PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
         UsersController.removeById
     ]);
+
+    // commentY  edited here 
     app.patch('/users/friend/add/:userId', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),

@@ -1,6 +1,8 @@
 const mongoose = require('../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
 
+// commentY  edited here 
+
 const userSchema = new Schema({
     firstName: String,
     lastName: String,
@@ -33,15 +35,32 @@ const User = mongoose.model('Users', userSchema);
 exports.findByEmail = (email) => {
     return User.find({email: email});
 };
-exports.findById = (id) => {
-    return User.findById(id)
+
+// commentY  edited here 
+
+exports.findById = (id, friendQuery) => {
+    if (friendQuery === 'defualt'){
+        return User.findById(id)
         .then((result) => {
             result = result.toJSON();
             delete result._id;
             delete result.__v;
             return result;
-        });
-};
+        })
+    } else{
+        return User.findById(id)
+        .populate('friends')
+        .exec((err, user) => {
+            delete user._id;
+            delete user.__v;
+            for (friend of user.friends){
+                delete friend._id;
+                delete friend.__v;
+            }
+            return user;
+    })
+    
+};}
 
 exports.createUser = (userData) => {
     const user = new User(userData);
@@ -81,6 +100,8 @@ exports.removeById = (userId) => {
     });
 };
 
+
+// commentY  added here 
 
 exports.addFriendById=(userId, friendId)=>{
     return User.findById(friendId) 
