@@ -53,3 +53,22 @@ exports.removeById = (req, res) => {
             res.status(204).send({});
         });
 };
+
+exports.addFriendById = (req, res)=>{
+    UserModel.addFriendById(req.body.userId,req.params.userId)
+        .then((result)=>{
+            res.status(200).send({result})
+        })
+        .catch((error)=>{
+            res.status(404).send({message:{error}})
+        })
+}
+
+exports.removeFriendById=(req, res)=>{
+    UserModel.removeFriendById(req.body.userId, req.params.userId)
+    .then((result)=>{
+        res.status(200).send({result})
+    })
+    .catch((error)=>{
+        res.status(404).send({message:{error}})
+    })}

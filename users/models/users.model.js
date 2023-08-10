@@ -81,3 +81,25 @@ exports.removeById = (userId) => {
     });
 };
 
+
+exports.addFriendById=(userId, friendId)=>{
+    return User.findById(friendId) 
+    .then(friend => {
+      return User.findById(userId);
+    })
+    .then(user => {
+  
+      // Add John's ID to Sarah's friends
+      user.friends.push(friend._id);
+  
+      return user.save();
+    })
+}
+
+exports.removeFriendById=(userId, friendId)=>{
+    return User.findById(userId)
+    .then(user=>{
+        user.friends.pull(friendId)
+        return user.save()
+    })
+}
